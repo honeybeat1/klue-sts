@@ -5,16 +5,17 @@ Solving Semantic Textual Similarity task for KLUE Benchmark dataset within 12 da
 
 > 3,4주차 기업과제
 
-## Todo
+## Process
 1. 학습 데이터 전처리 
-- 맞춤법, 영숫특문제거
-- khaiii 형태소 분석기 사용
+    
+    - 맞춤법, 영숫특문제거
+    - khaiii 형태소 분석기 사용
 2. Pretrained Model 선정, 불러오기
-- klue-RoBERTa-large 모델
+    - klue-RoBERTa-large 모델
 3. Train 코드 작성
-- transformers.Trainer 클래스를 이용한 훈련
+    - transformers.Trainer 클래스를 이용한 훈련
 4. 최적 하이퍼 파라미터 서치
-- Optuna를 이용한 하이퍼 파라미터 서치
+    - Optuna를 이용한 하이퍼 파라미터 서치
 5. 하이퍼 파라미터 튜닝한 모델 분석
 6. FastAPI를 통한 모델 구현
 

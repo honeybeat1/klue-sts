@@ -72,13 +72,9 @@ Solving Semantic Textual Similarity task for KLUE Benchmark dataset within 12 da
 
   [KLUE STS 데이터](https://klue-benchmark.com/tasks/67/data/description)는 STS task를 해결하기 위해 만들어진 한국어 데이터셋이며, AIRBNB(구어체 리뷰), Policy(격식체 뉴스), ParaKQC(구어체 스마트홈 쿼리)의 세 가지 도메인으로 구성되어 있습니다. 전체 데이터 개수는 총 13,224개로, Train 데이터 11,668개, Dev 데이터 519개, Test 데이터 1,037개인 약 20:1:2의 비율로 구성되어 있습니다.  본 분석에서는 Train 데이터를 분리하여 Train과 Dev로 Dev 데이터를 Test로 간주하여 진행하였습니다. Train 데이터 내의 Dev의 비율이 9:1이 되도록 11,668개를 10494, 1167개로 분리하였습니다. 그래서 Train:Dev:Test의 데이터 개수를 10494:1167:519 개로 재구성하였습니다. 데이터셋은 guid, source, sentence1, sentence2, labels, annotations 총 6개의 칼럼으로 구성되어 있으며 label은 real-label, label, binary-label 3가지 값을 갖고 있습니다. real-label은 0에서 5까지 범위에서 두 문장의 유사도를 실수형으로 표현한 라벨이며, label은 real-label을 소숫점 둘째 자리에서 반올림 한 값, 그리고 binary-label은 threshold 3을 기준으로 이하면 0, 이상이면 1로 표현한 값입니다. 
 
-![binary-label은 Well-balanced 되어 있다](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f5c3a29c-c231-439f-a44d-a5b65ef826a0/Untitled.png)
+![binary-label은 Well-balanced 되어 있다](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f5c3a29c-c231-439f-a44d-a5b65ef826a0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220417T105850Z&X-Amz-Expires=86400&X-Amz-Signature=d1855297d40a4d26a17dc70f7dc86eb975287770dfdbb60826aadb51f17bbcc4&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)binary-label은 Well-balanced 되어 있다
 
-binary-label은 Well-balanced 되어 있다
-
-![정수형 label의 경우 0에 가까운 값이 가장 많다](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d8f47ef5-b098-42ec-8880-e8adc47d6a55/Untitled.png)
-
-정수형 label의 경우 0에 가까운 값이 가장 많다
+![정수형 label의 경우 0에 가까운 값이 가장 많다](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d8f47ef5-b098-42ec-8880-e8adc47d6a55/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220417T105923Z&X-Amz-Expires=86400&X-Amz-Signature=6002ac86ce6c2499ebfec44c2b61de1ea22f5fc7dedc10da4e935059d1fcf2e7&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)정수형 label의 경우 0에 가까운 값이 가장 많다
 
    KLUE STS Task에서 f1-score metric의 타겟 값으로 사용한 Binary label은 0.55 : 0.45의 비율로 다소 balanced 되어 있는 데이터셋이었습니다. Train셋에서 중복 행을 발견하여 하나씩만 남기고 제거해 주었습니다. ‘Sentence1’과 ‘Sentence2’ 내용이 같으면서 labels 까지 모든 값이  같은 중복 데이터가 5개가 존재했습니다. 결측치는 존재하지 않았습니다. 
 
@@ -93,10 +89,10 @@ binary-label은 Well-balanced 되어 있다
     1. 문장의 의미 유사도를 비교하기 위해선 중요한 의미를 담고 있는 명사, 동사 위주의 형태소 분리가 필요하다고 판단하였습니다. 
     2. 불용어로 접속사, 조사 등의 문장의 의미에 큰 영향을 끼치지 않는다 판단되는 부분을 제거하였습니다. 품사리스트를 참고하여 각종 조사와 어미를 제거했습니다. 
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5f498444-a24e-4699-b9f0-63f80d5640c2/Untitled.png)
+    ![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5f498444-a24e-4699-b9f0-63f80d5640c2/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220417T110025Z&X-Amz-Expires=86400&X-Amz-Signature=5ab573239bc0826c6f563fb0819bcd0b573ad15542e8be8861ef9bde193246da&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 KLUE STS 데이터 셋에 대해 총 4단계의 전처리를 적용한 데이터셋을 가지고 훈련을 진행하였습니다. 각 단계별로 모델을 구분하여 Wandb로 성능을 모니터링 하였습니다. 아래 결과에서 확인할 수 있듯이 Batch_size 128개 모델로 khaiii 형태소 분석기를 거친 데이터셋이 가장 높은 validation score를 기록한 것을 확인할 수 있습니다. 하지만 khaiii 라이브러리를 설치할 때 5분 정도 시간이 필요했는데, 소요 시간 대비 성능에 큰 차이가 없었습니다. 별도로 전처리를 하지 않은 데이터셋 또한 0.9558로 다소 괜찮은 validation score를 기록한 것을 확인할 수 있었습니다. 따라서 최종 분석에서는 영어 등의 기타 문자만 제거하는 cleanse 전처리만 거치고 추론하도록 하였습니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/95c9cb62-8d40-495d-80a8-7c5cc69abcd4/Untitled.png)
+![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/95c9cb62-8d40-495d-80a8-7c5cc69abcd4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220417T105823Z&X-Amz-Expires=86400&X-Amz-Signature=d63eddeef49b131550d3e25e909ac4c94941bd86c09a94a4a5e727d84187326e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 - 전처리 후 데이터의 갯수 : train, val (10494, 1167)

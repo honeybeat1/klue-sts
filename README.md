@@ -54,7 +54,7 @@ Solving Semantic Textual Similarity task for KLUE Benchmark dataset within 12 da
 2. Data Preprocessing
     - 맞춤법, 영특문 제거
     - khaiii 형태소 분석기 사용
-3. Data Augumentation
+3. Data Augmentation
     - EDA (easy data augmentation)
 4. Pretrained Model 선정, 불러오기
     - klue-RoBERTa-base
@@ -96,3 +96,13 @@ KLUE STS 데이터 셋에 대해 총 4단계의 전처리를 적용한 데이터
 ![Untitled](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/95c9cb62-8d40-495d-80a8-7c5cc69abcd4/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220417%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220417T105823Z&X-Amz-Expires=86400&X-Amz-Signature=d63eddeef49b131550d3e25e909ac4c94941bd86c09a94a4a5e727d84187326e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
 
 - 전처리 후 데이터의 갯수 : train, val (10494, 1167)
+
+# Data Augmentation
+
+KLUE-STS 데이터셋은 1만여개의 한국어 문장 쌍으로 구성되어 있습니다. 하지만 다른 STS Task 프로젝트에서 훈련한 데이터셋의 크기가 30k, 40k 정도로 확연히 컸기 때문에, 우리 프로젝트의 성능과 과적합을 방지하고 모델의 일반화를 돕기 위해 EDA(Easy Data Augmentation) 기법을 선택하여 데이터를 증강하였습니다. 
+
+1만여개의 데이터셋 크기에 비해 sts task를 진행한 다른 프로젝트의 경우, 데이터셋의 크기가 30k, 40k등 확연히 컸기 때문에 Data Augmentation을 진행하였습니다. 문장 내 임의의 두 단어의 위치를 바꾸거나, 불용어가 아닌 n개의 단어들을 선택해 임의로 선택한 동의어로 바꾸거나, 임의의 단어를 삭제하는 등으로 Sentence1의 문장의 의미를 변질하지 않으면서 변형하여 증강하였습니다. 기존 Sentence1 문장의 짝인 Sentence2를 증강된 문장에 쌍으로 추가하였습니다. 전처리 된 Train 데이터 셋의 크기가 10,494개의 문장쌍을 갖고 있었는데, 약 6배인 61,389개의 데이터셋으로 증강시킬 수 있었습니다. 증강 후 정확히 중복되는 문장은 제거하였기때문에 정확히 6배는 되지 않습니다.
+
+비록 프로젝트 마감 내에 증강된 데이터를 코랩 환경의 한계로 끝까지 돌려볼 수 없었지만, 프로젝트 끝나고 보강하는 과정에서 시험해볼 수 있었습니다. 
+
+[KorEDA 프로젝트](https://github.com/catSirup/KorEDA)([Reference](https://arxiv.org/pdf/1901.11196.pdf))

@@ -11,13 +11,13 @@ Solving Semantic Textual Similarity task for KLUE Benchmark dataset within 12 da
     - 맞춤법, 영숫특문제거
     - khaiii 형태소 분석기 사용
 2. Pretrained Model 선정, 불러오기
-    - klue-RoBERTa-large 모델
+    - klue-RoBERTa-base 모델
 3. Train 코드 작성
     - transformers.Trainer 클래스를 이용한 훈련
 4. 최적 하이퍼 파라미터 서치
     - Optuna를 이용한 하이퍼 파라미터 서치
-5. 하이퍼 파라미터 튜닝한 모델 분석
-6. FastAPI를 통한 모델 구현
+5. Pearsonr, f1 score로 모델 훈련 결과 평가
+6. FastAPI를 통한 모델 서빙
 
 ---
 

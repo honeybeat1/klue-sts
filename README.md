@@ -43,7 +43,7 @@ Solving Semantic Textual Similarity task for KLUE Benchmark dataset within 12 da
 ### 제출사항
 
 - 학습된 모델 (모델 자유 선택)
-    Pretrained KLUE RoBERTa Large
+    Pretrained KLUE RoBERTa Base
 - 학습 방식 보고서
     - 어떤 모델을 선택했나
     - 어떤 파라미터를 튜닝했나
